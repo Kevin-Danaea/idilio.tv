@@ -29,9 +29,12 @@ export const ShowCard: React.FC<ShowCardProps> = ({ show, onPress, variant = 'st
     >
       <View className="relative rounded-lg overflow-hidden bg-dark-card shadow-lg" style={{ aspectRatio: 2/3 }}>
         <Image
-          source={{ uri: show.posterUrl}}
-          className="w-full h-full"
-          style={{ resizeMode: 'cover' }}
+          source={{ uri: show.posterUrl }}
+          style={{ 
+            width: '100%', 
+            height: '100%',
+            resizeMode: 'cover',
+          }}
         />
         
         {/* Status Badge */}

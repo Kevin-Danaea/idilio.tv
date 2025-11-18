@@ -23,9 +23,12 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   return (
     <View className="relative w-full mb-6" style={{ height: 400 }}>
       <Image
-        source={{ uri: show.posterUrl }}
-        className="w-full h-full"
-        style={{ resizeMode: 'cover' }}
+        source={{ uri: show.bannerUrl }}
+        style={{ 
+          width: '100%', 
+          height: '100%',
+          resizeMode: 'cover',
+        }}
       />
       <View className="absolute inset-0 bg-black/30" />
       <View className="absolute bottom-0 left-0 right-0 h-32 bg-dark-bg" />

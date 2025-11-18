@@ -1,9 +1,9 @@
-import { ICatalogRepository } from '../../domain/repositories/ICatalogRepository';
 import { Category } from '../../domain/entities/Category';
-import { Show } from '../../domain/entities/Show';
 import { Episode } from '../../domain/entities/Episode';
-import { ISupabaseDataSource } from '../datasources/remote/ISupabaseDataSource';
+import { Show } from '../../domain/entities/Show';
+import { ICatalogRepository } from '../../domain/repositories/ICatalogRepository';
 import { MockDataSource } from '../datasources/local/MockDataSource';
+import { ISupabaseDataSource } from '../datasources/remote/ISupabaseDataSource';
 
 /**
  * Implementación concreta del repositorio de catálogo
@@ -20,6 +20,7 @@ export class CatalogRepository implements ICatalogRepository {
       return await this.dataSource.getCategories();
     } catch (error) {
       // Fallback a mock data si Supabase falla
+      console.warn('⚠️ Falling back to mock data for categories:', error instanceof Error ? error.message : error);
       const mockDataSource = new MockDataSource();
       return await mockDataSource.getCategories();
     }
@@ -30,6 +31,7 @@ export class CatalogRepository implements ICatalogRepository {
       return await this.dataSource.getShowById(id);
     } catch (error) {
       // Fallback a mock data si Supabase falla
+      console.warn(`⚠️ Falling back to mock data for show ${id}:`, error instanceof Error ? error.message : error);
       const mockDataSource = new MockDataSource();
       return await mockDataSource.getShowById(id);
     }
@@ -40,6 +42,7 @@ export class CatalogRepository implements ICatalogRepository {
       return await this.dataSource.getEpisodesByShowId(showId);
     } catch (error) {
       // Fallback a mock data si Supabase falla
+      console.warn(`⚠️ Falling back to mock data for episodes of show ${showId}:`, error instanceof Error ? error.message : error);
       const mockDataSource = new MockDataSource();
       return await mockDataSource.getEpisodesByShowId(showId);
     }

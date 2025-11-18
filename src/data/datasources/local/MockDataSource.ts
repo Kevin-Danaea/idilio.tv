@@ -1,8 +1,8 @@
-import { ISupabaseDataSource } from '../remote/ISupabaseDataSource';
 import { Category } from '../../../domain/entities/Category';
-import { Show } from '../../../domain/entities/Show';
 import { Episode } from '../../../domain/entities/Episode';
+import { Show } from '../../../domain/entities/Show';
 import { MOCK_CATEGORIES, generateMockEpisodes } from '../../../shared/constants/mockData';
+import { ISupabaseDataSource } from '../remote/ISupabaseDataSource';
 
 /**
  * Implementación mock de la fuente de datos
@@ -13,12 +13,14 @@ import { MOCK_CATEGORIES, generateMockEpisodes } from '../../../shared/constants
  */
 export class MockDataSource implements ISupabaseDataSource {
   async getCategories(): Promise<Category[]> {
+    console.log('📦 Using MOCK data for categories');
     // Simular delay de red
     await new Promise(resolve => setTimeout(resolve, 800));
     return MOCK_CATEGORIES;
   }
 
   async getShowById(id: string): Promise<Show | null> {
+    console.log(`📦 Using MOCK data for show ${id}`);
     await new Promise(resolve => setTimeout(resolve, 600));
     
     for (const category of MOCK_CATEGORIES) {
@@ -32,6 +34,7 @@ export class MockDataSource implements ISupabaseDataSource {
   }
 
   async getEpisodesByShowId(showId: string): Promise<Episode[]> {
+    console.log(`📦 Using MOCK data for episodes of show ${showId}`);
     await new Promise(resolve => setTimeout(resolve, 400));
     
     const show = await this.getShowById(showId);

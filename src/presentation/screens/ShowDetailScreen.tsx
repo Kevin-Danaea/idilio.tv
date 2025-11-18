@@ -1,13 +1,13 @@
-import React from 'react';
-import { View, Text, ScrollView, Image, Pressable } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { useAppContext } from '../providers/AppProvider';
-import { useShowDetails } from '../hooks/useShowDetails';
-import { EpisodeItem } from '../components/molecules/EpisodeItem';
+import { ArrowLeft, Heart, PlayCircle, Share2 } from 'lucide-react-native';
+import React from 'react';
+import { Image, Pressable, ScrollView, Text, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { Badge } from '../components/atoms/Badge';
 import { Button } from '../components/atoms/Button';
-import { ArrowLeft, Share2, Heart, PlayCircle } from 'lucide-react-native';
+import { EpisodeItem } from '../components/molecules/EpisodeItem';
+import { useShowDetails } from '../hooks/useShowDetails';
+import { useAppContext } from '../providers/AppProvider';
 
 /**
  * Pantalla: ShowDetail
@@ -82,28 +82,66 @@ export const ShowDetailScreen: React.FC = () => {
         </View>
 
         {/* Header Image */}
-        <View className="relative w-full" style={{ aspectRatio: 16/9 }}>
+        <View className="relative w-full mb-6" style={{ height: 400 }}>
           <Image
             source={{ uri: show.bannerUrl }}
-            className="w-full h-full"
-            style={{ resizeMode: 'cover' }}
+            style={{ 
+              width: '100%', 
+              height: '100%',
+              resizeMode: 'cover',
+            }}
           />
-          <View className="absolute bottom-0 left-0 right-0 h-32 bg-dark-bg" />
+          {/* Title & Stats sobre la imagen */}
+          <View className="absolute bottom-0 left-0 right-0 px-4 pb-4">
+            <Text 
+              className="text-2xl font-bold mb-2 leading-tight text-white"
+              style={{
+                textShadowColor: 'rgba(0, 0, 0, 0.75)',
+                textShadowOffset: { width: 0, height: 2 },
+                textShadowRadius: 4,
+              }}
+            >
+              {show.title}
+            </Text>
+            <View className="flex-row items-center flex-wrap gap-3">
+              <Badge variant={show.status === 'Ongoing' ? 'info' : 'success'}>
+                {show.status}
+              </Badge>
+              <Text 
+                className="text-xs text-white"
+                style={{
+                  textShadowColor: 'rgba(0, 0, 0, 0.75)',
+                  textShadowOffset: { width: 0, height: 1 },
+                  textShadowRadius: 3,
+                }}
+              >
+                {show.releaseYear}
+              </Text>
+              <Text 
+                className="text-xs text-white"
+                style={{
+                  textShadowColor: 'rgba(0, 0, 0, 0.75)',
+                  textShadowOffset: { width: 0, height: 1 },
+                  textShadowRadius: 3,
+                }}
+              >
+                {show.totalEpisodes} Episodes
+              </Text>
+              <Text 
+                className="text-xs text-white"
+                style={{
+                  textShadowColor: 'rgba(0, 0, 0, 0.75)',
+                  textShadowOffset: { width: 0, height: 1 },
+                  textShadowRadius: 3,
+                }}
+              >
+                ⭐ {show.rating}
+              </Text>
+            </View>
+          </View>
         </View>
 
-        <View className="px-4 -mt-12 relative z-10">
-          {/* Title & Stats */}
-          <Text className="text-2xl font-bold mb-2 leading-tight text-white">
-            {show.title}
-          </Text>
-          <View className="flex-row items-center flex-wrap gap-3 mb-4">
-            <Badge variant={show.status === 'Ongoing' ? 'info' : 'success'}>
-              {show.status}
-            </Badge>
-            <Text className="text-xs text-gray-400">{show.releaseYear}</Text>
-            <Text className="text-xs text-gray-400">{show.totalEpisodes} Episodes</Text>
-            <Text className="text-xs text-gray-400">⭐ {show.rating}</Text>
-          </View>
+        <View className="px-4 -mt-4 relative z-10">
 
           {/* Tags */}
           <View className="flex-row flex-wrap gap-2 mb-4">

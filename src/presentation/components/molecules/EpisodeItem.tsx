@@ -30,8 +30,12 @@ export const EpisodeItem: React.FC<EpisodeItemProps> = ({ episode, onPress }) =>
       <View className="relative w-28 bg-gray-800 rounded overflow-hidden" style={{ aspectRatio: 16/9 }}>
         <Image
           source={{ uri: episode.thumbnailUrl }}
-          className="w-full h-full"
-          style={{ resizeMode: 'cover', opacity: 0.8 }}
+          style={{ 
+            width: '100%', 
+            height: '100%',
+            resizeMode: 'cover', 
+            opacity: 0.8,
+          }}
         />
         {!episode.isFree && (
           <View className="absolute top-1 right-1 bg-black/60 rounded p-0.5">
