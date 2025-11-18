@@ -1,10 +1,12 @@
 import React from 'react';
-import { View, Text, ScrollView, Image, Pressable, SafeAreaView } from 'react-native';
+import { View, Text, ScrollView, Image, Pressable } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useAppContext } from '../providers/AppProvider';
 import { useShowDetails } from '../hooks/useShowDetails';
 import { EpisodeItem } from '../components/molecules/EpisodeItem';
 import { Badge } from '../components/atoms/Badge';
+import { Button } from '../components/atoms/Button';
 import { ArrowLeft, Share2, Heart, PlayCircle } from 'lucide-react-native';
 
 /**

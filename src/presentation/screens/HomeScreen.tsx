@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react';
-import { View, ScrollView, ActivityIndicator, SafeAreaView } from 'react-native';
+import { View, ScrollView, ActivityIndicator } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { useAppContext } from '../providers/AppProvider';
 import { useCatalog } from '../hooks/useCatalog';
