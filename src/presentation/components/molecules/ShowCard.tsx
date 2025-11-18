@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, Image, Pressable } from 'react-native';
-import { Show } from '../types';
-import { Play } from 'lucide-react-native';
+import { Show } from '../../../domain/entities/Show';
+import { Badge } from '../atoms/Badge';
 
 interface ShowCardProps {
   show: Show;
@@ -9,8 +9,15 @@ interface ShowCardProps {
   variant?: 'standard' | 'featured';
 }
 
+/**
+ * Molecule: ShowCard
+ * Componente compuesto que muestra información de un show
+ * 
+ * Principio SRP: Responsabilidad única de mostrar información de un show
+ * Principio OCP: Extensible mediante variant sin modificar código existente
+ */
 export const ShowCard: React.FC<ShowCardProps> = ({ show, onPress, variant = 'standard' }) => {
-  const cardWidth = variant === 'featured' ? 160 : 112; // w-40 = 160px, w-28 = 112px
+  const statusVariant = show.status === 'Ongoing' ? 'info' : 'success';
 
   return (
     <Pressable
@@ -22,16 +29,14 @@ export const ShowCard: React.FC<ShowCardProps> = ({ show, onPress, variant = 'st
     >
       <View className="relative rounded-lg overflow-hidden bg-dark-card shadow-lg" style={{ aspectRatio: 2/3 }}>
         <Image
-          source={{ uri: show.poster_url }}
+          source={{ uri: show.posterUrl}}
           className="w-full h-full"
           style={{ resizeMode: 'cover' }}
         />
         
         {/* Status Badge */}
         <View className="absolute top-1 right-1">
-          <View className={`px-1.5 py-0.5 rounded ${show.status === 'Ongoing' ? 'bg-blue-600' : 'bg-green-600'}`}>
-            <Text className="text-[10px] font-bold text-white">{show.status}</Text>
-          </View>
+          <Badge variant={statusVariant}>{show.status}</Badge>
         </View>
         
         {/* Gradient Overlay */}
@@ -45,14 +50,7 @@ export const ShowCard: React.FC<ShowCardProps> = ({ show, onPress, variant = 'st
           </Text>
           <View className="flex-row items-center justify-between mt-1">
             <Text className="text-[10px] text-gray-300">⭐ {show.rating}</Text>
-            <Text className="text-[10px] text-gray-300">{show.total_episodes} eps</Text>
-          </View>
-        </View>
-
-        {/* Play Icon Overlay */}
-        <View className="absolute inset-0 items-center justify-center opacity-0">
-          <View className="bg-brand-600 rounded-full p-2 shadow-lg">
-            <Play size={16} fill="white" color="white" />
+            <Text className="text-[10px] text-gray-300">{show.totalEpisodes} eps</Text>
           </View>
         </View>
       </View>

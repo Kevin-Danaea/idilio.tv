@@ -1,19 +1,32 @@
 import React from 'react';
-import { View, Text, Pressable, FlatList } from 'react-native';
-import { Category, Show } from '../types';
-import { ShowCard } from './ShowCard';
+import { View, Text, FlatList, Pressable } from 'react-native';
+import { Category } from '../../../domain/entities/Category';
+import { Show } from '../../../domain/entities/Show';
+import { ShowCard } from '../molecules/ShowCard';
 import { ChevronRight } from 'lucide-react-native';
 
 interface CategoryRowProps {
   category: Category;
   onShowClick: (show: Show) => void;
+  onViewAllClick?: () => void;
 }
 
-const CARD_WIDTH = 112; // w-28 = 112px
-const CARD_SPACING = 12; // space-x-3 = 12px
-const HORIZONTAL_PADDING = 16; // px-4 = 16px
+const CARD_WIDTH = 112;
+const CARD_SPACING = 12;
+const HORIZONTAL_PADDING = 16;
 
-export const CategoryRow: React.FC<CategoryRowProps> = ({ category, onShowClick }) => {
+/**
+ * Organism: CategoryRow
+ * Componente complejo que muestra una fila de categoría con carrusel de shows
+ * 
+ * Principio SRP: Responsabilidad única de mostrar una categoría con sus shows
+ * Principio OCP: Extensible mediante props sin modificar código existente
+ */
+export const CategoryRow: React.FC<CategoryRowProps> = ({
+  category,
+  onShowClick,
+  onViewAllClick,
+}) => {
   const snapInterval = CARD_WIDTH + CARD_SPACING;
 
   const renderShowCard = ({ item }: { item: Show }) => (
@@ -26,13 +39,12 @@ export const CategoryRow: React.FC<CategoryRowProps> = ({ category, onShowClick 
     <View className="mb-8">
       <View className="flex-row items-center justify-between px-4 mb-3">
         <Text className="text-lg font-bold text-white">{category.title}</Text>
-        <Pressable className="flex-row items-center">
+        <Pressable onPress={onViewAllClick} className="flex-row items-center">
           <Text className="text-xs text-brand-500">View All </Text>
           <ChevronRight size={14} color="#e11d48" />
         </Pressable>
       </View>
       
-      {/* Horizontal Scroll Container with FlatList */}
       <FlatList
         data={category.shows}
         renderItem={renderShowCard}
